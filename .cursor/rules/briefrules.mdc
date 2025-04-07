@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- Use /v1/agents/completions endpoint when interacting with a Mistral agent.
+
+The request body must include:
+
+"agent_id" — the agent's unique ID string
+
+"messages" — a list of objects { role: 'user'|'system'|'assistant', content: string }
+
+Do NOT include model — agents define their model internally.
+
+Do not include unsupported fields (e.g. agent_id on /chat/completions, or id inside messages).
+
+Always use application/json content-type.
+
+Route requests through /api/mistral — Vite proxy handles API key securely.
+
+Maintain Axios error handling — catch 422s, 401s, 500s and wrap them in structured messages.
+
+The frontend must never require the user to enter or manage the API key.
+
+Do not change the data flow or logic — UX/UI only
+
+Don’t add libraries unless needed (use Tailwind, framer-motion, or pure CSS)
+
+Keep full theme compatibility with light/dark mode (theme.css)
+
+Respect isLoading from App state to trigger loading UI

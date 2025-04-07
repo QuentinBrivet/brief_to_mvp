@@ -1,0 +1,246 @@
+/* ===== INPUT SECTION ===== */
+.input-section {
+  width: 100%;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ===== FORM ELEMENTS ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+label {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-base);
+  resize: vertical;
+  min-height: 240px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.submit-button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  margin-top: var(--spacing-xs);
+  align-self: flex-end;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  transform: translateY(-100%);
+  transition: transform var(--transition-normal);
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.submit-button:hover:not(:disabled):before {
+  transform: translateY(0);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--text-secondary);
+}
+
+.submit-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--spacing-md);
+}
+
+/* ===== FILE UPLOAD ===== */
+.file-upload-container {
+  margin: var(--spacing-md) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-upload-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--bg-elevated);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  min-width: 180px;
+}
+
+.pdf-upload-label:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.pdf-upload-label.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+  background-color: var(--bg-secondary);
+}
+
+.upload-icon {
+  margin-right: var(--spacing-xs);
+  font-size: var(--font-size-lg);
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.pdf-upload-label:hover .upload-icon {
+  transform: translateY(-2px);
+}
+
+.upload-hint {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.pdf-info {
+  margin: var(--spacing-md) 0;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--bg-elevated);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--border-radius-sm);
+  width: 100%;
+  animation: slideIn 0.3s ease-out;
+}
+
+.pdf-info p {
+  margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+}
+
+.pdf-tip {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: var(--font-size-xs);
+}
+
+/* API Status Styling */
+.api-status {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.api-status.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: rgb(239, 68, 68);
+  border-left: 3px solid rgb(239, 68, 68);
+}
+
+/* ===== LIGHT MODE ADJUSTMENTS ===== */
+@media (prefers-color-scheme: light) {
+  textarea {
+    background-color: white;
+    border-color: var(--border-color);
+  }
+  
+  textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  }
+  
+  .pdf-upload-label {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  
+  .pdf-upload-label:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  .pdf-upload-label.disabled {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .pdf-info {
+    background-color: rgba(79, 70, 229, 0.05);
+  }
+
+  .api-status.error {
+    background-color: rgba(239, 68, 68, 0.05);
+  }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .submit-container {
+    justify-content: center;
+  }
+  
+  .submit-button {
+    align-self: center;
+    width: 100%;
+  }
+  
+  textarea {
+    min-height: 200px;
+    padding: var(--spacing-sm);
+  }
+} 
