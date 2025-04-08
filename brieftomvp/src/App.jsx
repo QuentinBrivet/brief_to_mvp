@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { BriefInput } from './components/input'
 import { ResultView } from './components/output'
-import { ErrorMessage, ApiRequestViewer, ApiRequestHistory, LoadingOverlay } from './components/common'
+import { ErrorMessage, LoadingOverlay } from './components/common'
 import MistralService from './services/MistralService'
 import ErrorManager from './services/ErrorManager'
 import { ERROR_MESSAGES } from './constants/templates'
@@ -19,6 +19,30 @@ const fadeIn = {
   }
 }
 
+const staggerChildren = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
+
+const slideUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { 
+      type: "spring",
+      stiffness: 260,
+      damping: 20,
+      duration: 0.5 
+    }
+  }
+}
+
 /**
  * Main App component
  */
@@ -28,9 +52,6 @@ function App() {
   const [error, setError] = useState(null)
   const [technicalDetails, setTechnicalDetails] = useState(null)
   const [apiConnected, setApiConnected] = useState(true) // Default to true to avoid flashing UI
-  const [apiRequestData, setApiRequestData] = useState(null)
-  const [apiRequestHistory, setApiRequestHistory] = useState([])
-  const [showDebug, setShowDebug] = useState(window.innerWidth > 768) // Collapse debug by default on mobile
 
   // Test API connection when the component mounts
   useEffect(() => {
@@ -38,12 +59,6 @@ function App() {
       try {
         const connected = await MistralService.testConnection()
         setApiConnected(connected)
-        
-        // Set last request data
-        if (MistralService.getRequestHistory().length > 0) {
-          setApiRequestData(MistralService.getRequestHistory()[MistralService.getRequestHistory().length - 1]);
-          setApiRequestHistory(MistralService.getRequestHistory());
-        }
         
         if (!connected) {
           console.error('API connection failed. Check the API key in vite.config.js.')
@@ -64,14 +79,6 @@ function App() {
     }
     
     testConnection()
-    
-    // Add resize listener for responsive layout
-    const handleResize = () => {
-      setShowDebug(window.innerWidth > 768)
-    }
-    
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   /**
@@ -93,19 +100,8 @@ function App() {
       // Call the Mistral API via our service using both agents in sequence
       const response = await MistralService.processAndGenerateMVP(briefText)
       setResult(response)
-      
-      // Update API request data display
-      const history = MistralService.getRequestHistory();
-      if (history.length > 0) {
-        // Show the last request made
-        setApiRequestData(history[history.length - 1]);
-        setApiRequestHistory(history);
-      }
     } catch (err) {
       console.error('Error calling Mistral API:', err)
-      
-      // Update request history even on error
-      setApiRequestHistory(MistralService.getRequestHistory());
       
       // If it's a processed error with our enhanced format
       if (err.type && err.source) {
@@ -130,15 +126,22 @@ function App() {
   return (
     <div className="app-container">
       {/* Loading Overlay */}
-      <LoadingOverlay isLoading={isLoading} message="Crafting your MVP..." />
+      <LoadingOverlay isLoading={isLoading} message="Crafting your PRD..." />
+      
+      <div className="app-background">
+        <div className="gradient-blob blob-1"></div>
+        <div className="gradient-blob blob-2"></div>
+        <div className="gradient-blob blob-3"></div>
+      </div>
       
       <motion.header
         initial="hidden"
         animate="visible"
-        variants={fadeIn}
+        variants={staggerChildren}
+        className="modern-header"
       >
-        <h1>Brief to MVP</h1>
-        <p className="tagline">Transform your client brief into an MVP flow and screen design</p>
+        <motion.h1 variants={slideUp} className="gradient-text">Brief to PRD</motion.h1>
+        <motion.p variants={slideUp} className="tagline">Transform your project brief into a stunning product requirement document</motion.p>
       </motion.header>
       
       <main>
@@ -155,37 +158,6 @@ function App() {
           />
         </motion.div>
         
-        {/* API Request Debugging Components */}
-        {apiRequestData && (
-          <motion.div 
-            className="debug-section"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ 
-              opacity: showDebug ? 1 : 0.5, 
-              height: 'auto',
-              transition: { duration: 0.3 }
-            }}
-          >
-            <div className="debug-header" onClick={() => setShowDebug(!showDebug)}>
-              <h2>API Request Debugging</h2>
-              <button className="toggle-button">
-                {showDebug ? '▼' : '►'}
-              </button>
-            </div>
-            
-            {showDebug && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ApiRequestViewer requestData={apiRequestData} />
-                <ApiRequestHistory requestHistory={apiRequestHistory} />
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-
         {/* Error Message Component */}
         <AnimatePresence>
           {error && (
@@ -204,15 +176,18 @@ function App() {
         </AnimatePresence>
 
         {/* Result View Component */}
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {result && (
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -30 }}
               transition={{ 
-                duration: 0.5,
-                delay: 0.2
+                type: "spring",
+                damping: 25,
+                stiffness: 200
               }}
+              className="result-container"
             >
               <ResultView result={result} />
             </motion.div>
@@ -224,8 +199,9 @@ function App() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5 }}
+        className="modern-footer"
       >
-        <p>Powered by Mistral AI</p>
+        <p>Powered by <span className="highlight">Mistral AI</span></p>
       </motion.footer>
     </div>
   )

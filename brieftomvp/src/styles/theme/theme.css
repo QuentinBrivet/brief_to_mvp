@@ -13,6 +13,16 @@
   --error-bg: rgba(239, 68, 68, 0.1);
   --success-color: #10b981;
   
+  /* RGB values for rgba usage */
+  --primary-rgb: 99, 102, 241;
+  --primary-dark-rgb: 79, 70, 229;
+  --primary-light-rgb: 165, 180, 252;
+  --bg-main-rgb: 15, 23, 42;
+  --bg-secondary-rgb: 20, 30, 55;
+  --bg-elevated-rgb: 30, 41, 59;
+  --error-rgb: 239, 68, 68;
+  --success-rgb: 16, 185, 129;
+  
   /* ===== GRADIENTS ===== */
   --gradient-primary: linear-gradient(135deg, #6366f1, #4f46e5);
   --gradient-secondary: linear-gradient(135deg, #4f46e5, #3730a3);
@@ -81,6 +91,15 @@
     --bg-elevated: rgba(0, 0, 0, 0.04);
     --border-color: rgba(100, 116, 139, 0.2);
     --error-bg: rgba(239, 68, 68, 0.05);
+    
+    /* RGB values for light mode */
+    --primary-rgb: 79, 70, 229;
+    --primary-dark-rgb: 55, 48, 163;
+    --primary-light-rgb: 199, 210, 254;
+    --bg-main-rgb: 255, 255, 255;
+    --bg-secondary-rgb: 240, 240, 250;
+    --bg-elevated-rgb: 245, 245, 255;
+    
     --gradient-primary: linear-gradient(135deg, #4f46e5, #6366f1);
     --gradient-secondary: linear-gradient(135deg, #3730a3, #4f46e5);
     --gradient-accent: linear-gradient(135deg, #7c3aed, #6366f1);

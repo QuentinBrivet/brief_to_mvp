@@ -20,45 +20,27 @@ class MistralService {
       }
     });
     
-    // Store last request data for debugging
+    // Store last request data for debugging (removed history array)
     this.lastRequestData = null;
     this.lastEndpoint = null;
-    this.requestHistory = [];
   }
 
-  // Helper to store request data
+  // Helper to store request data (removed history push)
   _trackRequest(endpoint, data) {
     this.lastRequestData = data;
     this.lastEndpoint = endpoint;
     
-    // Add to history with timestamp
-    this.requestHistory.push({
-      timestamp: new Date().toISOString(),
-      endpoint,
-      data
-    });
-    
-    // Keep history limited to last 10 requests
-    if (this.requestHistory.length > 10) {
-      this.requestHistory.shift();
-    }
+    // Removed history tracking logic
     
     console.log(`Request to ${endpoint}:`, data);
     return data;
   }
   
-  // Get request history
-  getRequestHistory() {
-    return this.requestHistory;
-  }
+  // Removed getRequestHistory method
+  // getRequestHistory() { ... }
   
-  // Get last request data
-  getLastRequest() {
-    return {
-      endpoint: this.lastEndpoint,
-      data: this.lastRequestData
-    };
-  }
+  // Removed getLastRequest method
+  // getLastRequest() { ... }
 
   async processBrief(rawBriefText) {
     try {
@@ -168,10 +150,12 @@ class MistralService {
   
   async extractTextFromPDF(file) {
     // This would be implemented if we had a PDF extraction service
-    // For now, we'll return a placeholder message
-    return `Extracted text from PDF: ${file.name}. 
-    
-    Please replace this with the actual content of your brief.`;
+    // For now, we'll return an empty string or just the filename
+    // return `Extracted text from PDF: ${file.name}. 
+    // 
+    // Please replace this with the actual content of your brief.`;
+    console.warn("PDF extraction not implemented. Returning empty string.");
+    return ""; // Or perhaps return file.name if that's useful
   }
 }
 

@@ -1,9 +1,24 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import './LoadingOverlay.css';
 import LoadingSpinner from './LoadingSpinner';
 
 const LoadingOverlay = ({ isLoading, message = "Crafting your MVP..." }) => {
+  // Add/remove no-scroll class from body when loading state changes
+  useEffect(() => {
+    if (isLoading) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isLoading]);
+
   return (
     <AnimatePresence>
       {isLoading && (

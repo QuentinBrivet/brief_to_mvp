@@ -2,6 +2,8 @@
 .input-section {
   width: 100%;
   animation: fadeIn 0.6s ease-out;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* ===== FORM ELEMENTS ===== */
@@ -10,6 +12,13 @@ form {
   flex-direction: column;
   gap: var(--spacing-md);
   width: 100%;
+  background: var(--bg-elevated);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05), 0 1px 8px rgba(0,0,0,0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 label {
@@ -18,6 +27,7 @@ label {
   color: var(--text-primary);
   margin-bottom: var(--spacing-xs);
   display: block;
+  letter-spacing: -0.01em;
 }
 
 textarea {
@@ -31,15 +41,16 @@ textarea {
   font-family: var(--font-family-base);
   resize: vertical;
   min-height: 240px;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
   line-height: var(--line-height-relaxed);
 }
 
 textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-light);
+  box-shadow: 0 0 0 3px var(--primary-light), inset 0 2px 4px rgba(0,0,0,0.03);
+  transform: translateY(-1px);
 }
 
 textarea::placeholder {
@@ -52,17 +63,21 @@ textarea::placeholder {
   padding: var(--spacing-sm) var(--spacing-lg);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
-  background: var(--gradient-primary);
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   color: white;
   border: none;
   border-radius: var(--border-radius-md);
   cursor: pointer;
-  transition: all var(--transition-normal);
-  margin-top: var(--spacing-xs);
-  align-self: flex-end;
-  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
   position: relative;
   overflow: hidden;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  min-width: 180px;
 }
 
 .submit-button:before {
@@ -74,12 +89,12 @@ textarea::placeholder {
   height: 100%;
   background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
   transform: translateY(-100%);
-  transition: transform var(--transition-normal);
+  transition: transform 0.3s ease;
 }
 
 .submit-button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
 }
 
 .submit-button:hover:not(:disabled):before {
@@ -88,84 +103,81 @@ textarea::placeholder {
 
 .submit-button:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
 }
 
 .submit-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-  background: var(--text-secondary);
+  background: #a5b4fc;
+  box-shadow: none;
 }
 
 .submit-container {
   display: flex;
-  justify-content: flex-end;
-  margin-top: var(--spacing-md);
-}
-
-/* ===== FILE UPLOAD ===== */
-.file-upload-container {
-  margin: var(--spacing-md) 0;
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  margin-top: var(--spacing-md);
+  gap: var(--spacing-md);
 }
 
+/* ===== FILE UPLOAD (Modified to style the label as a button) ===== */
 .pdf-upload-label {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: rgba(79, 70, 229, 0.04);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--bg-elevated);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--border-radius-md);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.05);
+  height: 46px;
+  min-width: 150px;
+  letter-spacing: 0.01em;
 }
 
 .pdf-upload-label:hover {
-  background-color: var(--bg-secondary);
-  border-color: var(--primary-light);
-  color: var(--primary);
+  background-color: rgba(79, 70, 229, 0.08);
+  border-color: rgba(79, 70, 229, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
 }
 
 .pdf-upload-label.disabled {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
-  background-color: var(--bg-secondary);
+  background-color: rgba(0, 0, 0, 0.02);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+  box-shadow: none;
 }
 
 .upload-icon {
   margin-right: var(--spacing-xs);
   font-size: var(--font-size-lg);
   display: inline-block;
-  transition: transform var(--transition-fast);
+  transition: transform 0.2s ease;
 }
 
 .pdf-upload-label:hover .upload-icon {
-  transform: translateY(-2px);
-}
-
-.upload-hint {
-  margin-top: var(--spacing-xs);
-  font-size: var(--font-size-xs);
-  color: var(--text-secondary);
-  font-style: italic;
+  transform: translateY(0) scale(1.1);
 }
 
 .pdf-info {
   margin: var(--spacing-md) 0;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--bg-elevated);
+  padding: var(--spacing-md);
+  background-color: rgba(79, 70, 229, 0.04);
   border-left: 3px solid var(--primary);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-md);
   width: 100%;
   animation: slideIn 0.3s ease-out;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
 }
 
 .pdf-info p {
@@ -178,6 +190,18 @@ textarea::placeholder {
   color: var(--text-secondary);
   font-style: italic;
   font-size: var(--font-size-xs);
+}
+
+/* Animation for PDF info section */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* API Status Styling */
@@ -197,30 +221,39 @@ textarea::placeholder {
 
 /* ===== LIGHT MODE ADJUSTMENTS ===== */
 @media (prefers-color-scheme: light) {
+  form {
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03), 0 1px 8px rgba(0,0,0,0.02);
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+  
   textarea {
     background-color: white;
-    border-color: var(--border-color);
+    border-color: rgba(0,0,0,0.08);
   }
   
   textarea:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
   }
   
   .pdf-upload-label {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: rgba(79, 70, 229, 0.04);
+    border-color: rgba(79, 70, 229, 0.15);
   }
   
   .pdf-upload-label:hover {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: rgba(79, 70, 229, 0.08);
   }
 
   .pdf-upload-label.disabled {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0,0,0,0.08);
   }
   
   .pdf-info {
-    background-color: rgba(79, 70, 229, 0.05);
+    background-color: rgba(79, 70, 229, 0.04);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
   }
 
   .api-status.error {
@@ -231,16 +264,113 @@ textarea::placeholder {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .submit-container {
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
   }
   
   .submit-button {
-    align-self: center;
     width: 100%;
+    min-width: unset;
+  }
+  
+  .pdf-upload-label {
+    width: 100%;
+    justify-content: center;
+    min-width: unset;
   }
   
   textarea {
     min-height: 200px;
     padding: var(--spacing-sm);
+  }
+  
+  form {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Additional modern styling */
+.card-shadow {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-shadow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08), 0 3px 14px rgba(0,0,0,0.04);
+}
+
+.input-label {
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.modern-input {
+  border-width: 1px;
+  transition: all 0.2s ease;
+}
+
+.modern-input:focus {
+  transform: scale(1.005);
+}
+
+.pdf-icon {
+  display: inline-flex;
+  margin-right: 8px;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+/* Button hover effects */
+.submit-button, .pdf-upload-label {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.submit-button::after, .pdf-upload-label::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: linear-gradient(to top, rgba(255,255,255,0.1) 0%, transparent 100%);
+  transition: height 0.2s ease;
+  z-index: -1;
+}
+
+.submit-button:hover::after, .pdf-upload-label:hover::after {
+  height: 100%;
+}
+
+/* Pulse animation for the submit button */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+}
+
+.submit-button:not(:disabled):hover {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Make fonts more modern */
+@media (prefers-color-scheme: light) {
+  .input-label {
+    color: #4338CA;
+  }
+  
+  .card-shadow:hover {
+    box-shadow: 0 14px 40px rgba(0,0,0,0.05), 0 3px 14px rgba(0,0,0,0.02);
   }
 } 

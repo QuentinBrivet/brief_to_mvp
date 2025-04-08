@@ -42,26 +42,39 @@ function BriefInput({ onSubmit, isLoading, disabled }) {
 
   return (
     <section className="input-section">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="brief-input">Enter your client brief</label>
+      <form onSubmit={handleSubmit} className="card-shadow">
+        <label htmlFor="brief-input" className="input-label">What's your project about?</label>
         <textarea 
           id="brief-input"
           value={brief}
           onChange={(e) => setBrief(e.target.value)}
-          placeholder={BRIEF_TEMPLATE}
+          placeholder="Enter the details of your project brief here..."
           rows={12}
           required
           disabled={isLoading || isPdfLoading || disabled}
+          className="modern-input"
         />
         
-        <div className="file-upload-container">
-          <label htmlFor="pdf-upload" className={`pdf-upload-label ${disabled ? 'disabled' : ''}`}>
+        {pdfInfo && (
+          <div className="pdf-info">
+            <p>
+              <span className="pdf-icon">📄</span>
+              <strong>{pdfInfo.name}</strong> ({pdfInfo.size} KB)
+            </p>
+            <p className="pdf-tip">
+              <strong>Pro tip:</strong> Review the extracted content before generating your PRD.
+            </p>
+          </div>
+        )}
+
+        <div className="submit-container">
+          <label htmlFor="pdf-upload" className={`pdf-upload-label button-like ${disabled ? 'disabled' : ''}`}>
             {isPdfLoading ? (
-              <LoadingSpinner size="small" text="Processing PDF..." />
+              <LoadingSpinner size="small" text="Processing..." />
             ) : (
               <>
                 <span className="upload-icon">📄</span>
-                Upload PDF Brief
+                <span>Add File</span>
               </>
             )}
           </label>
@@ -73,29 +86,16 @@ function BriefInput({ onSubmit, isLoading, disabled }) {
             disabled={isLoading || isPdfLoading || disabled}
             style={{ display: 'none' }}
           />
-          <p className="upload-hint">or upload a PDF document</p>
-        </div>
-
-        {pdfInfo && (
-          <div className="pdf-info">
-            <p>Loaded PDF: {pdfInfo.name} ({pdfInfo.size} KB)</p>
-            <p className="pdf-tip">
-              <strong>Note:</strong> PDF text extraction is limited. 
-              Please review and edit the extracted content before generating the MVP flow.
-            </p>
-          </div>
-        )}
-
-        <div className="submit-container">
-          {isLoading ? (
-            <LoadingSpinner size="small" text="Processing brief and generating MVP flow..." />
+          
+          {isLoading && !isPdfLoading ? (
+            <LoadingSpinner size="small" text="Generating PRD..." />
           ) : (
             <button 
               type="submit" 
               className="submit-button"
-              disabled={!brief.trim() || isPdfLoading || disabled}
+              disabled={!brief.trim() || isPdfLoading || isLoading || disabled}
             >
-              Generate MVP Flow
+              <span>Generate my PRD</span>
             </button>
           )}
         </div>
